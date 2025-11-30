@@ -1,0 +1,7 @@
+chip_placement:
+  num_router: 4
+  num_cores: 16
+  mc_per_hbm: 4
+  num_hbm_per_side: 1
+  num_i: 2
+  num_chiplet: 4

@@ -1,0 +1,9 @@
+corner
+i i . H H H H .
+. . . . . . . R
+. . . . . . . R
+H . C C C C C R
+H C C C C C C R
+H C C C C C . .
+H . . . . . . .
+. R R R R . . .
