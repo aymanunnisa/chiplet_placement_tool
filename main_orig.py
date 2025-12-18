@@ -116,20 +116,20 @@ def chip_placement(num_router, num_cores, mc_per_hbm, num_hbm_per_side, num_i,nu
                             corner_chiplet_latencies = simulate_and_gather_results(corner_chiplet_dir_name, chiplet_size, 'trace_file_corner_chiplet_')
                             
                             ##PERIPHERY CHIPLET FOR n*m
-                            #periphery_chiplet_combinations, periphery_chiplet_dir_name = generate_chiplet_periphery_combinations(chiplet_size, num_router,mc_per_hbm,group_length,num_cores,num_hbm_per_side, num_chiplet, dir_name, length, breadth)
+                            periphery_chiplet_combinations, periphery_chiplet_dir_name = generate_chiplet_periphery_combinations(chiplet_size, num_router,mc_per_hbm,group_length,num_cores,num_hbm_per_side, num_chiplet, dir_name, length, breadth)
                             ##periphery_chiplet_dir_name = '../trace_files_31_10_2024_10_59_39/periphery_chiplet_trace_files_8_3_3/'                   
-                            #periphery_manhattan_distance = calculate_periphery_manhattan_distance(periphery_chiplet_combinations,num_chiplet)                          
+                            periphery_manhattan_distance = calculate_periphery_manhattan_distance(periphery_chiplet_combinations,num_chiplet)                          
                             #
                             ##simulate the trace for periphery chiplets
-                            #periphery_chiplet_latencies = simulate_and_gather_results(periphery_chiplet_dir_name, chiplet_size, 'trace_file_periphery_chiplet_')
+                            periphery_chiplet_latencies = simulate_and_gather_results(periphery_chiplet_dir_name, chiplet_size, 'trace_file_periphery_chiplet_')
                             #
                             ##CENTRE CHIPLET                            
-                            #centre_chiplet_combinations, centre_chiplet_dir_name = generate_chiplet_centre_combinations(chiplet_size, num_router,num_cores, num_chiplet, dir_name, length, breadth, mc_per_hbm, num_hbm_per_side)
+                            centre_chiplet_combinations, centre_chiplet_dir_name = generate_chiplet_centre_combinations(chiplet_size, num_router,num_cores, num_chiplet, dir_name, length, breadth, mc_per_hbm, num_hbm_per_side)
                             ##centre_chiplet_dir_name = '../trace_files_31_10_2024_10_59_39/centre_chiplet_trace_files_8_3_3'
-                            #centre_manhattan_distance = calculate_centre_manhattan_distance(centre_chiplet_combinations,num_chiplet)
+                            centre_manhattan_distance = calculate_centre_manhattan_distance(centre_chiplet_combinations,num_chiplet)
 
                             ##simulate the trace for corner chiplets
-                            #centre_chiplet_latencies = simulate_and_gather_results(centre_chiplet_dir_name, chiplet_size, 'trace_file_centre_chiplet_')
+                            centre_chiplet_latencies = simulate_and_gather_results(centre_chiplet_dir_name, chiplet_size, 'trace_file_centre_chiplet_')
                             
                             #LAYOUT
                               
