@@ -74,6 +74,7 @@ def chip_placement(num_router, num_cores, mc_per_hbm, num_hbm_per_side, num_i,nu
     periphery_chiplet_one_latencies = []
     periphery_chiplet_two_latencies = []
     corner_chiplet_latencies = []
+    centre_chiplet_latencies = []
     
 
     count_corner = 0 
@@ -119,10 +120,11 @@ def chip_placement(num_router, num_cores, mc_per_hbm, num_hbm_per_side, num_i,nu
                                 #find configuration with that index
                                 min_conf = [side_chiplet_combinations[min_md_idx]]
                                 
-
+                                
                             elif num_chiplet==4:
                                 if (length != 1 and breadth != 1):
                                     #Generate corner combinations
+                                    print(len(corner_chiplet_combinations))
                                     num_config_cntr = print_combinations(corner_chiplet_combinations, "corner",corner_manhattan_distance, num_config_cntr, num_chiplet, 'corner_chiplet_trace_files_'+str(chiplet_size) + '_' + str(length) + '_' + str(breadth))
                                     manhattan_distances.extend(corner_manhattan_distance)
                                     if simulate_flag:
@@ -138,9 +140,15 @@ def chip_placement(num_router, num_cores, mc_per_hbm, num_hbm_per_side, num_i,nu
                                     min_conf = [corner_chiplet_combinations[min_md_idx]]
                                     
                             else:
+                                #CALCULATE COMBINATIONS FOR OTHER TYPES OF CHIPLETS
+                                periphery_chiplet_combinations, periphery_chiplet_dir_name = generate_chiplet_periphery_combinations(chiplet_size, num_router,mc_per_hbm,group_length,num_cores,num_hbm_per_side, num_chiplet, dir_name, length, breadth)
+                                periphery_manhattan_distance = calculate_periphery_manhattan_distance(periphery_chiplet_combinations,num_chiplet)
+                                centre_chiplet_combinations, centre_chiplet_dir_name = generate_chiplet_centre_combinations(chiplet_size, num_router,num_cores,num_chiplet, dir_name, length, breadth,mc_per_hbm,num_hbm_per_side)
+                                centre_manhattan_distance = calculate_centre_manhattan_distance(centre_chiplet_combinations,num_chiplet)
+                                
                                 #COMBINATIONS FOR n*m CORNER PERIPHERY AND CENTRE
                                 num_corner_chiplet, num_periphery_chiplet, num_centre_chiplet = calculate_cor_peri_centre(num_chiplet,length,breadth)
-                                min_conf,num_config_cntr, manhattan_distances,simulation_latencies = cor_peri_centre_combinations(corner_chiplet_combinations, periphery_chiplet_combinations, centre_chiplet_combinations,corner_manhattan_distance,periphery_manhattan_distance,centre_manhattan_distance,num_corner_chiplet,num_periphery_chiplet,num_centre_chiplet, num_config_cntr, manhattan_distances,num_chiplet, chiplet_size, length, breadth,corner_chiplet_latencies, periphery_chiplet_latencies, centre_chiplet_latencies, simulation_latencies)
+                                min_conf,num_config_cntr, manhattan_distances,simulation_latencies = cor_peri_centre_combinations(corner_chiplet_combinations, periphery_chiplet_combinations, centre_chiplet_combinations,corner_manhattan_distance,periphery_manhattan_distance,centre_manhattan_distance,num_corner_chiplet,num_periphery_chiplet,num_centre_chiplet, num_config_cntr, manhattan_distances,num_chiplet, chiplet_size, length, breadth,corner_chiplet_latencies, periphery_chiplet_one_latencies, centre_chiplet_latencies, simulation_latencies)
                             
                         if simulate_flag == 0:
                             if manhattan_distances:
