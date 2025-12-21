@@ -277,6 +277,8 @@ def side_peri_combinations(side_combinations, periphery_combinations_one ,side_m
 def cor_peri_centre_combinations(corner_combinations, periphery_combinations, centre_combinations,corner_manhattan_distance,periphery_manhattan_distance,centre_manhattan_distance,num_corner_chiplet,num_periphery_chiplet,num_centre_chiplet, num_config_cntr, manhattan_distances,num_chiplet, chiplet_size, length, breadth,corner_chiplet_latencies, periphery_chiplet_latencies, centre_chiplet_latencies, simulation_latencies):
     min_config = [[]]
     min_md = 1000000
+    print("Number of combinations: ")
+    print(len(corner_combinations), len(periphery_combinations), len(centre_combinations))
     for corner_idx, corner_chiplet in enumerate(corner_combinations):
         corner_last_column = corner_chiplet[:,-1]
 
@@ -290,19 +292,21 @@ def cor_peri_centre_combinations(corner_combinations, periphery_combinations, ce
                     if np.all(periphery_last_row == centre_last_row):
         
                         #print('Genrating config with ID: ' + str(num_config_cntr))
-
+                        #print(corner_idx, periphery_idx, centre_idx)
                         #print("Corner , Periphery, and Centre:")
                         #print(str(corner_manhattan_distance[corner_idx]) + " " + str(periphery_manhattan_distance[periphery_idx]) + "  " + str(centre_manhattan_distance[centre_idx]))
                         total_manhattan_distance =(num_corner_chiplet *corner_manhattan_distance[corner_idx]+num_periphery_chiplet*periphery_manhattan_distance[periphery_idx]+num_centre_chiplet *centre_manhattan_distance[centre_idx])
                         if(total_manhattan_distance < min_md):
                           min_md = total_manhattan_distance
                           min_conf = [corner_chiplet,periphery_chiplet,centre_chiplet]
-                        average_simulation_latency = (num_corner_chiplet *corner_chiplet_latencies[corner_idx]+num_periphery_chiplet*periphery_chiplet_latencies[periphery_idx] + num_centre_chiplet *centre_manhattan_distance[centre_idx])/(num_corner_chiplet+num_periphery_chiplet+num_centre_chiplet)
+                        average_simulation_latency = 0
+                        if(corner_idx < len(corner_chiplet_latencies) and periphery_idx < len(periphery_chiplet_latencies) and centre_idx < len(centre_chiplet_latencies)):
+                            average_simulation_latency = (num_corner_chiplet *corner_chiplet_latencies[corner_idx]+num_periphery_chiplet*periphery_chiplet_latencies[periphery_idx] + num_centre_chiplet *centre_manhattan_distance[centre_idx])/(num_corner_chiplet+num_periphery_chiplet+num_centre_chiplet)
 
 
                         #directory to put the trace files
                         dir_name = str('config_' + str(num_config_cntr))
-                        os.mkdir(dir_name)
+                        os.makedirs(dir_name,exist_ok=True)
                         os.chdir(dir_name)
                         
                         config_file = open("configs.txt", "w") 
